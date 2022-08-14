@@ -4,7 +4,7 @@ from rest_framework import viewsets
 from rest_framework.views import APIView
 from rest_framework.decorators import api_view
 from .serializers import ClaimSerializer, EnrollmentSerializer, SubscriberSerializer, FundSerializer
-from .models import Subscriber, Fund
+from .models import Subscriber, Fund, Enrollment
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework import status
 from rest_framework.parsers import JSONParser 
@@ -49,8 +49,10 @@ def enroll(request):
 def claim(request):
     if request.method == 'POST':
         claim_data = JSONParser().parse(request)
+        enrollment = Enrollment.objects.get(uuid=claim_data.get('enrollment_id'))
+        subscriber = Subscriber.objects.get(pub_key=claim_data.get('pub_key'))
         claim_serializer = ClaimSerializer(data=claim_data)
         if claim_serializer.is_valid():
-            claim_serializer.save()
+            claim_serializer.save(enrollment=enrollment, subscriber=subscriber)
             return JsonResponse(claim_serializer.data, status=status.HTTP_201_CREATED)
         return JsonResponse(claim_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
