@@ -8,6 +8,7 @@ def current_year():
 class Fund(models.Model):
     id = models.AutoField(primary_key=True)
     uuid = models.UUIDField(default=uuid.uuid4)
+    chain_id = models.CharField(max_length=40)
     name = models.CharField(max_length=30, null=True, blank=True)
     year = models.CharField(max_length=4, default=str(datetime.date.today().year))
     fy_premium = models.DecimalField(max_digits=8, decimal_places=2)

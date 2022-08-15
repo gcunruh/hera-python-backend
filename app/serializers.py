@@ -4,7 +4,7 @@ from rest_framework import serializers
 class FundSerializer(serializers.ModelSerializer):
     class Meta:
         model = Fund
-        fields = ['uuid', 'name', 'year', 'fy_premium', 'fy_allowable']
+        fields = ['uuid', 'name', 'year', 'chain_id', 'fy_premium', 'fy_allowable']
 
 class ClaimSerializer(serializers.ModelSerializer):
     class Meta:
@@ -19,7 +19,6 @@ class EnrollmentSerializer(serializers.ModelSerializer):
         fields =  ['uuid', 'subscriber', 'fund', 'paid_in', 'date_paid_in', 'claims']
 
     def create(self, validated_data):
-        print(validated_data)
         fund = Fund.objects.get(name=validated_data.get('fund'))
         enrollment = Enrollment.objects.create(subscriber=validated_data.get('subscriber'), fund=fund, paid_in=validated_data.get('paid_in'))
         return enrollment
