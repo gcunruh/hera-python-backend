@@ -66,7 +66,7 @@ def claim(request):
     if request.method == 'POST':
         claim_data = JSONParser().parse(request)
         enrollment = Enrollment.objects.get(uuid=claim_data.get('enrollment_id'))
-        subscriber = Subscriber.objects.get(pub_key=claim_data.get('pub_key'))
+        subscriber = Subscriber.objects.filter(pub_key=claim_data.get('pub_key'))[0]
         claim_serializer = ClaimSerializer(data=claim_data)
         if claim_serializer.is_valid():
             claim_serializer.save(enrollment=enrollment, subscriber=subscriber)
