@@ -37,7 +37,7 @@ def subscriber_detail(request, pub_key):
     if request.method == 'GET':
         try:
             subscriber = Subscriber.objects.filter(pub_key=pub_key)[0]
-        except Subscriber.DoesNotExist:
+        except Subscriber.DoesNotExist or IndexError:
             return JsonResponse({'message': 'Does not exist'}, status=status.HTTP_404_NOT_FOUND)
         subscriber_serializer = SubscriberSerializer(subscriber)
         return JsonResponse(subscriber_serializer.data)
