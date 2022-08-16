@@ -9,7 +9,7 @@ class FundSerializer(serializers.ModelSerializer):
 class ClaimSerializer(serializers.ModelSerializer):
     class Meta:
         model = Claim
-        fields = ['uuid', 'subscriber', 'enrollment', 'claim_amount', 'status']
+        fields = ['uuid', 'subscriber', 'enrollment', 'claim_amount', 'status', 'date', 'file_support']
 
 class EnrollmentSerializer(serializers.ModelSerializer):
     fund =  FundSerializer(read_only=True)

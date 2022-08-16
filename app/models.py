@@ -38,5 +38,6 @@ class Claim(models.Model):
     file_support = models.URLField(max_length=200)
     claim_amount = models.DecimalField(max_digits=8, decimal_places=2, default=0.00)
     status = models.CharField(max_length=1, choices=STATUS, default="P")
+    date = models.DateTimeField(auto_now_add=True, editable=False)
     subscriber_notes = models.CharField(max_length=400, null=True, blank=True)
     system_notes = models.CharField(max_length=400, null=True, blank=True)

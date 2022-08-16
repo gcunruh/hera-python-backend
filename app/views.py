@@ -36,7 +36,7 @@ def create_fund(request):
 def subscriber_detail(request, pub_key):
     if request.method == 'GET':
         try:
-            subscriber = Subscriber.objects.get(pub_key=pub_key)
+            subscriber = Subscriber.objects.filter(pub_key=pub_key)[0]
         except Subscriber.DoesNotExist:
             return JsonResponse({'message': 'Does not exist'}, status=status.HTTP_404_NOT_FOUND)
         subscriber_serializer = SubscriberSerializer(subscriber)
